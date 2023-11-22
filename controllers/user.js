@@ -49,7 +49,7 @@ const updateUserPassword = async(req, res) => {
         throw new CustomError.BadRequestError('Incorrect Old Password!');
     }
     user.password = newPassword;
-    user.save();
+    await user.save();
     return res.status(StatusCodes.OK).json({user: {
         name: user.name,
         email: user.email,
