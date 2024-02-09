@@ -2,12 +2,20 @@
 
 1st - Download the project
 
-2nd - Run the following command "npm run install" (install dependencies)
+2nd - Run the following command "npm run install"
 
-3rd - Create a .env file in root with the following key value pairs MONGO_URI, JWT_SECRET, JWT_LIFETIME, CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, and STRIPE_SECRET_KEY
+3rd - Change directory into the src/client folder and run "npm run install". 
 
-Note: The cloud values must be from Cloudinary, which is where we host our images. Lastly, create a folder called "images" in the root directory. Also, make sure to update the public Stripe key located in client/src/index.js to your own.
+4th - Create a .env file in the root of the src/client folder and add the following 
+key value pair: REACT_APP_STRIPE_PUBLISHABLE_KEY
 
-4th - Type the following command "npm run start" to start application
+5th - Run "npm run build" 
+
+6th - Now create a .env file in the root of your entire project with the following key value pairs: MONGO_URI, JWT_SECRET, JWT_LIFETIME, CLOUD_NAME, CLOUD_API_KEY,
+CLOUD_API_SECRET, and STRIPE_SECRET_KEY
+
+Note: The cloud values must be from Cloudinary, which is where we host our images. 
+
+7th - Type the following command "npm run start" to start application
 
 DONE
