@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {type useDispatchType, type useSelectorType} from '../store';
 import {Loading} from '../components';
 import {getStats} from '../features/stats/statsThunk';
-import {BarChart, XAxis, YAxis, Tooltip, Legend, Bar} from 'recharts';
+import {BarChart, XAxis, YAxis, Tooltip, Legend, Bar, PieChart, Pie} from 'recharts';
 
 const monthNames = [
     "January", "February", "March", "April", "May", "June", "July",
@@ -14,6 +14,7 @@ const monthNames = [
 const Stats: React.FunctionComponent = () => {
     const dispatch = useDispatch<useDispatchType>();
     const {statsData, getStatsLoading} = useSelector((store: useSelectorType) => store.stats);
+    const [viewBarChart, setViewBarChart] = React.useState(true);
     React.useEffect(() => {
         dispatch(getStats());
     }, []);
@@ -32,18 +33,31 @@ const Stats: React.FunctionComponent = () => {
                         <div className="stats-item">Total Users: {statsData!.totalUsers}</div>
                     </div>
                     {statsData!.ordersPerMonth.length > 0 ? (
-                        <div className="chart-container">
-                            <BarChart width={600} height={300} data={statsData!.ordersPerMonth.map(item => {
-                                const monthName = monthNames[item.month - 1];
-                                return { month: monthName, count: item.count };
-                            })}>
-                                <XAxis dataKey="month"/>
-                                <YAxis/>
-                                <Tooltip/>
-                                <Legend/>
-                                <Bar dataKey="count" fill="black"/>
-                            </BarChart>
-                        </div>
+                        <>
+                            <p className="chart-label" onClick={() => setViewBarChart(currentState => !currentState)}>{viewBarChart ? 'View Pie Chart' : 'View Bar Chart'}</p>
+                            <div className="chart-container">
+                                {viewBarChart ? (
+                                    <BarChart width={600} height={300} data={statsData!.ordersPerMonth.map(item => {
+                                        const monthName = monthNames[item.month - 1];
+                                        return { month: monthName, orders: item.count };
+                                    })}>
+                                        <XAxis dataKey="month"/>
+                                        <YAxis/>
+                                        <Tooltip/>
+                                        <Legend/>
+                                        <Bar dataKey="orders" fill="black"/>
+                                    </BarChart>
+                                ) : (
+                                    <PieChart width={600} height={300}>
+                                        <Pie dataKey="count" nameKey="month" data={statsData!.ordersPerMonth.map(item => {
+                                            const monthName = monthNames[item.month - 1];
+                                            return { month: monthName, count: item.count };
+                                        })} fill="black" label/>
+                                        <Tooltip/>
+                                    </PieChart>
+                                )}
+                            </div>
+                        </>
                     ) : (
                         <h1 style={{textAlign: 'center'}}>Not Enough Data to Provide Chart!</h1>
                     )}
@@ -66,6 +80,14 @@ const Wrapper = styled.div`
             margin: 1rem 0;
             padding: 1rem;
         }
+    }
+    .chart-label {
+        margin: 1rem 0;
+        text-align: center;
+        cursor: pointer;
+    }
+    .chart-label:hover, .chart-label:active {
+        color: gray;
     }
     .chart-container {
         background-color: lightgray;

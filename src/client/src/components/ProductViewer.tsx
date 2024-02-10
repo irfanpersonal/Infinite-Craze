@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import emptyProductImage from '../images/empty-product-image.jpeg';
 import {type OrderType} from '../features/orders/ordersSlice';
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
@@ -10,11 +11,11 @@ interface ProductViewerProps {
 const ProductViewer: React.FunctionComponent<ProductViewerProps> = ({data: OrderListItem}) => {
     const names = OrderListItem.items.map(value => {
         const {product} = value;
-        return product.name;
+        return product?.name;
     });
     const images = OrderListItem.items.map(value => {
         const {product} = value;
-        return product.image;
+        return product?.image;
     });
     const amounts = OrderListItem.items.map(value => {
         const {amount} = value;
@@ -51,8 +52,8 @@ const ProductViewer: React.FunctionComponent<ProductViewerProps> = ({data: Order
     }
     return (
         <Wrapper>
-            <div>{names[currentImage]}</div>
-            <img className="product-image" src={images[currentImage]}/>
+            <div>{names[currentImage] || 'Product Deleted'}</div>
+            <img className="product-image" src={images[currentImage] || emptyProductImage}/>
             <div>Amount: {amounts[currentImage]}</div>
             <div>Color: {colors[currentImage]}</div>
             {images.length > 1 && (

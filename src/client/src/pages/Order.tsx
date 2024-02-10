@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import emptyProductImage from '../images/empty-product-image.jpeg';
 import {nanoid} from 'nanoid';
 import {useDispatch, useSelector} from 'react-redux';
 import {type useDispatchType, type useSelectorType} from '../store';
@@ -25,6 +26,7 @@ const Order: React.FunctionComponent = () => {
     React.useEffect(() => {
         dispatch(getSingleOrder(id!));
     }, []);
+    console.log(singleOrder);
     return (
         <Wrapper>
             {singleOrderLoading ? (
@@ -79,35 +81,49 @@ const Order: React.FunctionComponent = () => {
                                                 <div>Delivered</div>
                                             </div>
                                         </div>
-                                        <div className="message"><span className="underline">Message from Seller:</span> {singleOrder!.message}</div>
+                                        <div className="message"><span className="underline">Message {user!?.role === 'admin' ? ('to Customer') : ('from Seller')}</span> {singleOrder!.message}</div>
                                     </div>
                                 </div>
                                 <div className="shipping">
                                     <div className="title">Shipping Information</div>
-                                    <div>Address: {singleOrder!.address}</div>
-                                    <div>City: {singleOrder!.city}</div>
-                                    <div>State: {singleOrder!.state}</div>
-                                    <div>Country: {singleOrder!.country}</div>
-                                    <div>Postal Code: {singleOrder!.postalCode}</div>
+                                    <div className="shipping-info">Address: {singleOrder!.address}</div>
+                                    <div className="shipping-info">City: {singleOrder!.city}</div>
+                                    <div className="shipping-info">State: {singleOrder!.state}</div>
+                                    <div className="shipping-info">Country: {singleOrder!.country}</div>
+                                    <div className="shipping-info">Postal Code: {singleOrder!.postalCode}</div>
                                 </div>
                                 <div className="item">
                                     <div className="title">Item Information</div>
+                                    {/* Product is null */}
                                     {singleOrder!.items.map(order => {
-                                        const {amount, color, condition, product: {_id, name, price, image}} = order;
+                                        const {amount, color, condition, product} = order;
                                         return (
                                             <div className="product" key={nanoid()}>
                                                 <div style={{position: 'relative'}}>
-                                                    <img className="product-image" src={image} alt={name}/>
-                                                    <div className="product-amount">{amount}</div>
+                                                    <img className="product-image" src={product?.image || emptyProductImage} alt={product?.name || 'Product Deleted'}/>
+                                                    {product && (
+                                                        <div className="product-amount">{amount}</div>
+                                                    )}
                                                 </div>
                                                 <div className="center">
-                                                    <div><Link style={{color: 'black'}} to={`/product/${_id}`}>{name}</Link></div>
-                                                    <div className="underline">${price / 100}</div>
-                                                    <div>{_id}</div>
+                                                    {product && (
+                                                        <>
+                                                            <div><Link style={{color: 'black'}} to={`/product/${product?._id}`}>{product?.name}</Link></div>
+                                                            <div className="underline">${product?.price / 100}</div>
+                                                            <div>{product?._id}</div>
+                                                        </>
+                                                    )}
+                                                    {!product && (
+                                                        <div>Product Deleted</div>
+                                                    )}
                                                 </div>
                                                 <div>
-                                                    <div>Color: {color}</div>
-                                                    <div>Condition: {condition}</div>
+                                                    {product && (
+                                                        <>
+                                                            <div>Color: {color}</div>
+                                                            <div>Condition: {condition}</div>
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
                                         );
@@ -187,6 +203,11 @@ const Wrapper = styled.div`
     .info, .shipping, .item, .payment {
         outline: 1px solid black;
         padding: 1rem;
+    }
+    .shipping {
+        .shipping-info {
+            margin: 1rem 0;
+        }
     }
     .icons {
         display: flex;
