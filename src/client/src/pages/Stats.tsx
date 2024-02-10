@@ -17,7 +17,6 @@ const Stats: React.FunctionComponent = () => {
     React.useEffect(() => {
         dispatch(getStats());
     }, []);
-    console.log(statsData);
     return (
         <Wrapper>
             <h1 className="title">Stats</h1>
@@ -32,18 +31,22 @@ const Stats: React.FunctionComponent = () => {
                         <div className="stats-item">Total Reviews: {statsData!.totalReviews}</div>
                         <div className="stats-item">Total Users: {statsData!.totalUsers}</div>
                     </div>
-                    <div className="chart-container">
-                        <BarChart width={600} height={300} data={statsData!.ordersPerMonth.map(item => {
-                                const monthName = monthNames[item.month - 1]; // Subtract 1 as month numbers are zero-based index
+                    {statsData!.ordersPerMonth.length > 0 ? (
+                        <div className="chart-container">
+                            <BarChart width={600} height={300} data={statsData!.ordersPerMonth.map(item => {
+                                const monthName = monthNames[item.month - 1];
                                 return { month: monthName, count: item.count };
                             })}>
-                            <XAxis dataKey="month"/>
-                            <YAxis/>
-                            <Tooltip/>
-                            <Legend/>
-                            <Bar dataKey="count" fill="black"/>
-                        </BarChart>
-                    </div>
+                                <XAxis dataKey="month"/>
+                                <YAxis/>
+                                <Tooltip/>
+                                <Legend/>
+                                <Bar dataKey="count" fill="black"/>
+                            </BarChart>
+                        </div>
+                    ) : (
+                        <h1 style={{textAlign: 'center'}}>Not Enough Data to Provide Chart!</h1>
+                    )}
                 </>
             )}
         </Wrapper>

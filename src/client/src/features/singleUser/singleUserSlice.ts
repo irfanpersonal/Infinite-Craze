@@ -26,7 +26,7 @@ const singleUserSlice = createSlice({
             state.singleUserLoading = false;
             state.singleUser = action.payload;
         }).addCase(getSingleUser.rejected, (state) => {
-            state.singleUserLoading = false;
+            state.singleUserLoading = true;
         });
     }
 });

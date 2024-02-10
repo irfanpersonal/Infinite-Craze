@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import emptyProfilePicture from '../images/empty-profile-picture.jpeg';
 import {useParams, Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {type useDispatchType, type useSelectorType} from '../store';
-import {Loading, OrdersList} from '../components';
+import {Loading} from '../components';
 import {getSingleUser} from '../features/singleUser/singleUserThunk';
 import moment from 'moment';
 
@@ -23,7 +24,7 @@ const User: React.FunctionComponent = () => {
                 <>
                     <div className="user-container">
                         <Link className="user-link" to='/user'>Back to Users</Link>
-                        <img className="user-image" src={singleUser!.profilePicture} alt={singleUser!.name}/>
+                        <img className="user-image" src={singleUser!.profilePicture || emptyProfilePicture} alt={singleUser!.name}/>
                         <div className="user-info">Name: {singleUser!.name}</div>
                         <div className="user-info">Joined: {moment(singleUser!.createdAt).format('MMMM Do YYYY')}</div>
                         <div className="user-info">Email: {singleUser!.email}</div>

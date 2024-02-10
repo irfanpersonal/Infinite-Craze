@@ -5,6 +5,7 @@ import {deleteSingleOrder, getSingleOrder} from '../singleOrder/singleOrderThunk
 import {deleteSingleProduct, getSingleProduct, getSingleProductWithAuth} from '../singleProduct/singleProductThunk';
 import {createPaymentIntent} from '../user/userThunk';
 import {createOrder} from '../orders/ordersThunk';
+import {getSingleUser} from '../singleUser/singleUserThunk';
 
 interface INavigate {
     location: string
@@ -37,6 +38,8 @@ const navigationSlice = createSlice({
             state.location = state.location === `/success` ? `/success#` : `/success`;
         }).addCase(deleteSingleProduct.fulfilled, (state) => {
             state.location = state.location === `/product` ? `/product#` : `/product`;
+        }).addCase(getSingleUser.rejected, (state) => {
+            state.location = state.location === `/` ? `/#` : `/`;
         });
     }
 });
