@@ -33,7 +33,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use(express.json());
 
-// app.use(express.static(path.resolve(__dirname, './client/build')));
+app.use(express.static(path.resolve(__dirname, './client/build')));
 
 app.use('/api/v1/auth', authRouter);
 
@@ -45,9 +45,9 @@ app.use('/api/v1/order', orderRouter);
 
 app.use('/api/v1/admin', adminRouter);
 
-// app.get('*', (req: Request, res: Response) => {
-//     return res.status(StatusCodes.OK).sendFile(path.resolve(__dirname, './client/build/index.html'));
-// });
+app.get('*', (req: Request, res: Response) => {
+    return res.status(StatusCodes.OK).sendFile(path.resolve(__dirname, './client/build/index.html'));
+});
 
 app.use(notFoundMiddleware);
 
