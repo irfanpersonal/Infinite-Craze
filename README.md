@@ -12,6 +12,8 @@ Infinite Craze is an online store where people can buy items. There are two type
 
 ## Setup Instructions
 
+Before anything clear your browser cookies and localStorage or you may get errors.
+
 1st - Download the project
 
 2nd - Run the following command "npm install"
