@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {nanoid} from 'nanoid';
 import emptyProfilePicture from '../images/empty-profile-picture.jpeg';
 import {type ReviewType} from '../features/singleProduct/singleProductSlice';
@@ -37,37 +38,39 @@ const ReviewListItem: React.FunctionComponent<ReviewListItemProps> = ({name, pro
         <div className="single-review" key={nanoid()}>
             <div className="review-user">
                 <img className="pfp" src={profilePicture || emptyProfilePicture}/>
-                <div>{name}</div>
             </div>
             <div className="review-info">
                 {isEditingReview ? (
                     <form className="edit-review-form" onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="rating">Rating</label>
-                            <select id="rating" name="rating" defaultValue={singleProductReview!.rating} required>
-                                <option value=""></option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="title">Title</label>
-                            <input id="title" name="title" defaultValue={singleProductReview!.title} required/>
+                        <div className="row">
+                            <div className="column flexFull" style={{marginRight:'20px',}}>
+                                <label htmlFor="title" style={{marginTop:'0px',}}>Title</label>
+                                <input id="title" name="title" defaultValue={singleProductReview!.title} required/>
+                            </div>
+                            <div>
+                                <label style={{marginTop:'0px',}} htmlFor="rating">Rating</label>
+                                <select id="rating" name="rating" defaultValue={singleProductReview!.rating} required>
+                                    <option value=""></option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="comment">Comment</label>
-                            <textarea id="comment" name="comment" defaultValue={singleProductReview!.comment} required></textarea>
+                            <textarea style={{borderColor:'#eeeeee', backgroundColor:'#f9f9f9'}} id="comment" name="comment" defaultValue={singleProductReview!.comment} required></textarea>
                         </div>
-                        <button type="submit" disabled={updateReviewLoading}>{updateReviewLoading ? 'Editing' : 'Edit'}</button>
+                        <button className="editReviewButton" type="submit" disabled={updateReviewLoading}>{updateReviewLoading ? 'Editing' : 'Edit'}</button>
                     </form>
                 ) : (
                     <>
-                        <div>Rating Given: {singleProductReview.rating}</div>
-                        <div>Rating Title: {singleProductReview.title}</div>
-                        <div>Rating Comment: {singleProductReview.comment}</div>
+                        <div className="fw600">{name}</div>
+                        <div>{singleProductReview.rating}{'/5'}</div>
+                        <div style={{margin:'10px 0px',textDecoration:'underline'}}>{singleProductReview.title}</div>
+                        <div>{singleProductReview.comment}</div>
                     </>
                 )}
                 {user!?.name === singleProductReview.user.name && (

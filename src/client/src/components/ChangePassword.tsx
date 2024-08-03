@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {type useDispatchType, type useSelectorType} from '../store';
 import {updatePassword} from "../features/profile/profileThunk";
+import styled from 'styled-components';
 
 const ChangePassword: React.FunctionComponent = () => {
     const dispatch = useDispatch<useDispatchType>();
@@ -14,6 +15,7 @@ const ChangePassword: React.FunctionComponent = () => {
         dispatch(updatePassword(formData));
     }
     return (
+        <Wrapper>
         <form onSubmit={handleSubmit}>
             <p>Securely update your password by entering your current password along with the desired new password below.</p>
             <div>
@@ -24,9 +26,34 @@ const ChangePassword: React.FunctionComponent = () => {
                 <label htmlFor="newPassword">New Password</label>
                 <input id="newPassword" type="password" name="newPassword"/>
             </div>
-            <button type="submit" disabled={updatePasswordLoading}>{updatePasswordLoading ? 'Updating' : 'Update'}</button>
+            <button className="darkButton" type="submit" disabled={updatePasswordLoading}>{updatePasswordLoading ? 'Updating' : 'Update'}</button>
         </form>
+        </Wrapper>
     );
 }
+
+
+const Wrapper = styled.div`
+    padding:40px;
+    p {
+        margin-bottom:40px;
+        font-weight:600;
+    }
+    label {
+        margin-top:20px;
+        margin-bottom:10px;
+    }
+    form input {
+        padding:10px;
+        border-radius:0px;
+    }
+    .darkButton {
+        color:#FFFFFF;
+        padding:10px;
+        border-width:0px;
+        background-color:#000000;
+    }
+`;
+
 
 export default ChangePassword;

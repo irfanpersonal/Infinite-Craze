@@ -14,33 +14,49 @@ const OrdersListItem: React.FunctionComponent<OrderListItemProps> = ({data}) => 
     const {user} = useSelector((store: useSelectorType) => store.user);
     return (
         <Wrapper>
-            <div className="center-view">
+            <Link className="center-view" to={`/order/${data._id}`}>
                 <ProductViewer data={data}/>
                 <div className="order-information">
-                    <div className="order-title center bottom-space">Order Details</div>
-                    <div>Order Number: {data._id}</div>
-                    <div>Created At: {moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
-                    {user!?.role === 'admin' && (
-                        <>
-                            <div>Order by: {data.user!?.name}</div>
-                            <div>Customer Number: {data.user!?.phoneNumber}</div>
-                            <div>Customer Email: {data.user!?.email}</div>
-                        </>
-                    )}
-                    <Link className="link" to={`/order/${data._id}`}>View More Details</Link>
+
+                    <div></div>
+                    
+
+                    <div>
+                                    <div className="productMeta">Order #: <span>{data._id}</span></div>
+                                    <div className="productMeta">Placed: <span>{moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span></div>
+                                    
+                        {user!?.role === 'admin' && (
+                            <>
+                                
+                                
+                                    <div className="productMeta" style={{marginTop:'0px',}}>Name: <span> {data.user!?.name}</span></div>
+                                    <div className="productMeta">Number: <span> {data.user!?.phoneNumber}</span></div>
+ 
+                                    <div className="productMeta">Email: <span> {data.user!?.email}</span></div>
+                                    
+                                    
+
+                                
+                            </>
+                        )}
+                    </div>
+
+                    <div className="lightButton">View Details</div>
+
+
+                    
+                    
                 </div>
-            </div>
+            </Link>
+
         </Wrapper>
     );
 }
 
 const Wrapper = styled.article`
-    outline: 1px solid black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding:20px;
+    border-right:1px solid #eeeeee;
+    border-bottom:1px solid #eeeeee;
     .center {
         text-align: center;
     }
@@ -48,13 +64,17 @@ const Wrapper = styled.article`
         margin-bottom: 0.5rem;
     }
     .center-view {
-        margin: 0 auto;
+        display:flex;
+        flex-direction:row;
     }
     &:hover {
-        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     }
     .order-information {
-        padding: 0.5rem;
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
     }
     .order-title {
         background-color: black;
@@ -73,6 +93,22 @@ const Wrapper = styled.article`
     }
     .link:hover {
         outline: 1px solid black;
+    }
+    .productMeta {
+        display:flex;
+        flex-direction:column;
+        font-weight:600;
+        margin:10px 0px;
+    }
+    .productMeta span {
+        font-weight:400;
+    }
+    .lightButton {
+        color:#000000;
+        padding:10px;
+        border-width:0px;
+        text-align:center;
+        background-color:#eeeeee;
     }
 `;
 

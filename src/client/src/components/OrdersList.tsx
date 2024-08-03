@@ -18,7 +18,7 @@ const OrdersList: React.FunctionComponent<OrderListProps> = ({data, totalOrders}
     return (
         <Wrapper>
             <div className="order-info">
-                <h1>{totalOrders} Order{totalOrders! > 1 && 's'} Found...</h1>
+                <h1 className="">{totalOrders} Order{totalOrders! > 1 && 's'} Found.</h1>
                 <div>
                     <MdGridView onClick={() => setViewType(currentState => 'grid')} className={`view-type ${viewType === 'grid' && 'active-type'}`}/>
                     <GiHamburgerMenu onClick={() => setViewType(currentState => 'list')} className={`view-type ${viewType === 'list' && 'active-type'}`}/>
@@ -37,27 +37,26 @@ const OrdersList: React.FunctionComponent<OrderListProps> = ({data, totalOrders}
 
 const Wrapper = styled.section`
     .order-info {
+        padding:20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid black;
-        margin-bottom: 0.5rem;
+        border-bottom:1px solid #eeeeee;
     }
     .view-type {
+        margin-left:10px;
         cursor: pointer;
         font-size: 1.5rem;
-        margin-left: 0.5rem;
         padding: 0.25rem;
-        border-radius: 0.5rem;
-        outline: 1px solid black;
+        border: 1px solid black;
     }
     .active-type {
-        background-color: rgb(146, 199, 207);
+        filter:invert(1);
+        background-color: #FFFFFF;
     }
     .grid-styling {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
     }
 `;
 

@@ -20,7 +20,7 @@ const AddReview: React.FunctionComponent = () => {
         <div>
             <form className="review-form" onSubmit={handleSubmit}>
                 <div className="review-container">
-                    <div>
+                    <div className="flexFull" style={{marginRight:'20px',}}>
                         <label htmlFor="title">Title</label>
                         <input id="title" type="text" name="title"/>
                     </div>
@@ -40,7 +40,7 @@ const AddReview: React.FunctionComponent = () => {
                     <label htmlFor="comment">Comment</label>
                     <textarea id="comment" name="comment"></textarea>
                 </div>
-                <button type="submit" disabled={createReviewLoading}>{createReviewLoading ? 'Creating Review...' : 'Create Review'}</button>
+                <button style={{backgroundColor:'#000000',color:'#FFFFFF',width:'200px',marginTop:'20px',borderWidth:'0px',}} type="submit" disabled={createReviewLoading}>{createReviewLoading ? 'Creating Review...' : 'Create Review'}</button>
             </form>
         </div>
     );

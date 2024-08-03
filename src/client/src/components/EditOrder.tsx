@@ -23,7 +23,7 @@ const EditOrder: React.FunctionComponent<EditOrderProps> = ({singleOrder}) => {
     }
     return (
         <Wrapper>
-            <div className="edit-order">Edit Order</div>
+            <h1 className="edit-order tCenter">Edit Order</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="status">Status</label>
@@ -45,35 +45,38 @@ const EditOrder: React.FunctionComponent<EditOrderProps> = ({singleOrder}) => {
 }
 
 const Wrapper = styled.div`
-    padding: 1rem;
-    outline: 1px solid black;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 1rem;
+    padding:50px 20px;
     .edit-order {
-        text-align: center;
-        background-color: black;
-        color: white;
-        padding: 0.5rem;
+        
     }
     form {
-        margin: 0 auto;
+        width:50%;
+        margin:auto;
         label {
-            display: block;
-            margin-top: 0.25rem;
+            display:block;
+            margin-top:15px;
+            margin-bottom:15px;
         }
         select, textarea, button {
-            padding: 0.5rem;
+            padding:10px;
+            border-radius:0px;
         }
         textarea {
             resize: none;
             height: 100px;
+            border-radius:0px;
+            background-color:#f9f9f9;
+            border:1px solid #eeeeee;
         }
         select, textarea {
             width: 100%;    
         }
         button {
-            width: 100%;
+            color:#FFFFFF;
+            padding:10px 60px;
+            border-width:0px;
+            margin-top: 15px;
+            background-color:#000000;
         }
     }
 `;

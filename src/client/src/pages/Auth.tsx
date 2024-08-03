@@ -6,6 +6,7 @@ import {toggleAuthType} from '../features/user/userSlice';
 import {registerUser, loginUser} from '../features/user/userThunk';
 import {RegisterBox, LoginBox} from '../components';
 import {useNavigate} from 'react-router-dom';
+import banner from '../images/banner.jpg';
 
 const Auth: React.FunctionComponent = () => {
     const navigate = useNavigate();
@@ -34,17 +35,24 @@ const Auth: React.FunctionComponent = () => {
         }
     }, [user]);
     return (
-        <Wrapper>
-            <form onSubmit={handleSubmit}>
-                <h1>{wantsToRegister ? 'Register' : 'Login'}</h1>
-                {wantsToRegister ? (
-                    <RegisterBox/>
-                ) : (
-                    <LoginBox/>
-                )}
-                <p onClick={() => dispatch(toggleAuthType())}>{wantsToRegister ? 'Already have an account?' : `Don't have an account?`}</p>
-                <button type="submit" disabled={authLoading}>{authLoading ? 'SUBMITTING' : 'SUBMIT'}</button>
-            </form>
+        <Wrapper className="accountScreen">
+            <div className="half column aCenter jCenter">
+                <form onSubmit={handleSubmit}>
+                    
+                    <h1>{wantsToRegister ? 'Register' : 'Login'}</h1>
+                    {wantsToRegister ? (
+                        <RegisterBox/>
+                    ) : (
+                        <LoginBox/>
+                    )}
+                    <p onClick={() => dispatch(toggleAuthType())}>{wantsToRegister ? 'Already have an account?' : `Don't have an account?`}</p>
+                    <button className="mainButton" type="submit" disabled={authLoading}>{authLoading ? 'SUBMITTING' : 'SUBMIT'}</button>
+                </form>
+            </div>
+            <div className="half bgElement" style={{backgroundImage: `url(${banner})`,backgroundSize:'cover',}}>
+
+            </div>
+            
         </Wrapper>
     );
 }
@@ -53,8 +61,6 @@ const Wrapper = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
     h1 {
         text-align: center;
     }
@@ -63,11 +69,11 @@ const Wrapper = styled.div`
         padding: 1rem;
         label {
             display: block;
-            margin-top: 0.25rem;
+            margin-top: 20px;
+            margin-bottom:10px;
         }
         input, button {
             width: 100%;
-            padding: 0.25rem;
         }
         p {
             margin: 1rem 0;

@@ -49,23 +49,25 @@ const AddProduct: React.FunctionComponent = () => {
     }
     return (
         <Wrapper>
-            <form onSubmit={handleSubmit}>
-                <h1 className='title'>Add Product</h1>
+            <div className="pad20 pageHeader"><h1 className="tCenter">Add Product</h1><p className="tCenter">List a new item.</p></div>
+            
+            <div className="pad50">
+            <form onSubmit={handleSubmit} className="addProductForm">
                 <div>
                     <label htmlFor="name">Name</label>
-                    <input id="name" type="text" name="name"/>
+                    <input placeholder="Product Title" id="name" type="text" name="name"/>
                 </div>
                 <div>
                     <label htmlFor="description">Description</label>
-                    <textarea id="description" name="description"></textarea>
+                    <textarea placeholder="Product Description" id="description" name="description"></textarea>
                 </div>
                 <div>
                     <label htmlFor="price">Price</label>
-                    <input id="price" type="number" name="price"/>
+                    <input id="price" placeholder="Product Price" type="number" name="price"/>
                 </div>
                 <div>
                     <label htmlFor="shippingFee">Shipping Fee</label>
-                    <input id="shippingFee" type="number" name="shippingFee"/>
+                    <input id="shippingFee" placeholder="Shipping Cost" type="number" name="shippingFee"/>
                 </div>
                 <div>
                     <label htmlFor="condition">Condition</label>
@@ -93,7 +95,7 @@ const AddProduct: React.FunctionComponent = () => {
                     <label className="colors-label" htmlFor="colors">Colors <span className="option" onClick={() => addInput()}>+</span></label>
                     {colors.map((color, index) => (
                         <div key={index} style={{display: 'flex'}} id="color-box">
-                            <input className="color-input" id="color-input" value={color} onChange={(event) => handleInputChange(event, index)}/>
+                            <input placeholder="Enter color" className="color-input" id="color-input" value={color} onChange={(event) => handleInputChange(event, index)}/>
                             <button className="remove-color" id="remove-color" type="button" onClick={() => {
                                 if (document.querySelectorAll('.colors-box input').length === 1) {
                                     (document.querySelector('.custom-message') as HTMLDivElement).textContent = 'Note: You must have atleast 1 color!';
@@ -104,7 +106,7 @@ const AddProduct: React.FunctionComponent = () => {
                                     return;
                                 }
                                 removeInput(index);
-                            }}>X</button>
+                            }}>Delete</button>
                         </div>
                     ))}
                 </div>
@@ -114,32 +116,46 @@ const AddProduct: React.FunctionComponent = () => {
                 </div>
                 <button type="submit" disabled={createProductLoading}>{createProductLoading ? 'Creating...' : 'Create'}</button>
             </form>
+            </div>
         </Wrapper>
     );
 }
 
 const Wrapper = styled.div`
+    .pageHeader {
+        border-top:1px solid #eeeeee;
+        border-bottom:1px solid #eeeeee;
+    }
     .title {
         text-align: center;
         border-bottom: 1px solid black;
     }
     form {
         width: 50%;
-        margin: 1rem auto;
+        margin:auto;
         label {
-            display: block;
-            margin: 0.5rem 0;
+            display:block;
+            margin:15px 0px;
         }
-        input, select, textarea, button {
+        input, select, textarea {
             width: 100%;
-            padding: 0.25rem;
+            padding:10px;
+            border-radius:0px;
+            border:1px solid #eeeeee;
+            background-color:#f9f9f9;
         }
         textarea {
             height: 120px;
             resize: none;
         }
         button {
-            margin-top: 1rem;
+            width: 100%;
+            padding:10px;
+            color:#FFFFFF;
+            border-radius:0px;
+            border:0px solid #eeeeee;
+            background-color:#000000;
+            margin-top:20px;
         }
         p {
             margin: 1rem 0;

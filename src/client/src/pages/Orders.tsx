@@ -23,7 +23,11 @@ const Orders: React.FunctionComponent = () => {
     const theCorrectMethodToExecute = user!.role === 'admin' ? getAllOrders : user!.role === 'user' ? getUserSpecificOrders : Function;
     return (
         <Wrapper>
-            <div className="title">Orders</div>
+            <div className="pad20 pageHeader">
+                <h1 className="tCenter">Orders</h1>
+                <p className="tCenter">View a list of your orders.</p>
+            </div>
+            
             <SearchOrdersBox searchBoxValues={searchBoxValues} updateSearchBoxValues={updateSearchBoxValues} updateSearch={theCorrectMethodToExecute} setPage={setPage} ordersLoading={ordersLoading} role={user!.role}/>
             {ordersLoading ? (
                 <Loading title="Loading All Orders" position='normal' marginTop="1rem"/>
@@ -40,12 +44,9 @@ const Orders: React.FunctionComponent = () => {
 }
 
 const Wrapper = styled.div`
-    padding: 1rem;
-    .title {
-        text-align: center;
-        background-color: black;
-        color: white;
-        padding: 0.5rem;
+    .pageHeader {
+        border-top:1px solid #eeeeee;
+        border-bottom:1px solid #eeeeee;
     }
 `;
 

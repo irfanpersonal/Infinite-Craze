@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {useDispatch} from 'react-redux';
 import {useDispatchType} from '../store';
+import {FaMagnifyingGlass, FaSpinner} from "react-icons/fa6";
 
 interface SearchBoxProps {
     search: string,
@@ -24,23 +25,26 @@ const SearchBox: React.FunctionComponent<SearchBoxProps> = ({search, updateSearc
     }
     return (
         <Wrapper onSubmit={handleSubmit}>
-            <input id="search" type="search" name="search" value={search} onChange={handleChange}/>
-            <button id="search-btn" disabled={productsLoading}>{productsLoading ? 'Searching' : 'Search'}</button>
+            <input className="bRadius0" id="search" type="search" name="search" placeholder={"Type here"} value={search} onChange={handleChange}/>
+            <button id="search-btn" disabled={productsLoading}>{productsLoading ? <FaMagnifyingGlass/> : <FaMagnifyingGlass/>}</button>
         </Wrapper>
     );
 }
 
 const Wrapper = styled.form`
-    padding: 1rem;
-    border-bottom: 1px solid black;
+    display:flex;
+    flex-direction:row;
     #search, #search-btn {
-        padding: 0.25rem;
     }
     #search {
-        width: 70%;
     }
     #search-btn {
-        width: 30%;
+        color:#FFFFFF;
+        padding:0px 10px;
+        margin-left:10px;
+        border-radius:0px;
+        background-color:#000000;
+        border:1px solid #eeeeee;
     }
 `;
 

@@ -12,9 +12,13 @@ const Success: React.FunctionComponent = () => {
         }
     }, []);
     return (
-        <div>
-            <h1>Thank you for your purchase!</h1>
-            <Link to='/'>Go Home</Link>
+        <div className="column flexFull">
+            <div className="column aCenter pad50 pageHeader" style={{borderTop:'1px solid #eeeeee',borderBottom:'1px solid #eeeeee',}}>
+                <h1 className="">Success</h1>
+                <p>Your purchase was successful!</p>
+                <div style={{marginTop: '1rem', fontSize: '2rem'}}>🎉</div>
+                <Link to='/' style={{backgroundColor:'#000000',color:'#FFFFFF',padding:'10px 30px',marginTop:'20px', fontSize:'14px',}}>Go Home</Link>
+            </div>
         </div>
     );
 }

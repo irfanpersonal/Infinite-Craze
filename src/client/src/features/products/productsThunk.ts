@@ -24,3 +24,14 @@ export const createProduct = createAsyncThunk('products/createProduct', async(pr
         return thunkAPI.rejectWithValue(error.response.data.msg);
     }
 });
+
+export const getFeaturedProducts = createAsyncThunk('products/featuredProducts', async(_, thunkAPI) => {
+    try {
+        const response = await axios.get(`/api/v1/product`);
+        const data = response.data;
+        return data.products;
+    }
+    catch(error: any) {
+        return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+});

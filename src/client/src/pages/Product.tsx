@@ -6,7 +6,8 @@ import {getSingleProduct, getSingleProductWithAuth, getSingleProductReviews, del
 import {useDispatch, useSelector} from 'react-redux';
 import {type useDispatchType, type useSelectorType} from '../store';
 import {useParams, Link} from 'react-router-dom';
-import {FaArrowAltCircleLeft, FaEdit, FaTrash, FaCheckCircle} from 'react-icons/fa';
+import {FaEdit, FaTrash, FaCheckCircle} from 'react-icons/fa';
+import {FaArrowLeft} from 'react-icons/fa6';
 import {IoMdCloseCircle} from 'react-icons/io';
 import {FiCopy} from 'react-icons/fi';
 import {toast} from 'react-toastify';
@@ -55,9 +56,9 @@ const Product: React.FunctionComponent = () => {
         <Wrapper>
             <div className="product-navigation">
                 <div>
-                    <Link to={`/product`} style={{cursor: 'pointer', color: 'white'}}><FaArrowAltCircleLeft/></Link>
+                    <Link to={`/product`} style={{cursor: 'pointer',display:'flex',flexDirection:'row',alignItems:'center',}}><FaArrowLeft/> <span style={{marginLeft:'10px'}}>Back</span></Link>
                 </div>
-                <div>
+                <div className="hideMobile">
                     <div>{isEditing ? 'Editing Single Product' : 'Viewing Single Product'}</div>
                 </div>
                 <div className="product-actions">
@@ -98,24 +99,28 @@ const Product: React.FunctionComponent = () => {
                                     <img src={singleProduct!.image || emptyProductImage} alt={singleProduct!.name}/>
                                 </div>
                                 <div className="product-details">
-                                    <p><span>Name: </span>{singleProduct!.name}</p>
-                                    <p><span>Description: </span>{singleProduct!.description}</p>
+                                    <p className="product-title"><span></span>{singleProduct!.name}</p>
+                                    <p className="product-price"><span></span>${singleProduct!.price / 100}</p>
+                                    <p className="product-description"><span></span>{singleProduct!.description}</p>
                                     <p><span>Category: </span>{singleProduct!.category.charAt(0).toUpperCase() + singleProduct!.category.slice(1)}</p>
                                     <p><span>Condition: </span>{singleProduct!.condition.charAt(0).toUpperCase() + singleProduct!.condition.slice(1)}</p>
-                                    <p><span>Price: </span>${singleProduct!.price / 100}</p>
+                                    
                                     <p><span>Shipping Fee: </span>${singleProduct!.shippingFee / 100}</p>
                                     <p><span>Average Rating: </span>{singleProduct!.averageRating ? singleProduct!.averageRating : 'No Reviews'}</p>
                                     <form onSubmit={handleSubmit}>
                                         <p>
-                                            <span>Colors: </span>{singleProduct!.colors.map(item => {
-                                                return (
-                                                    <span className="pointer" key={nanoid()} onClick={() => {
-                                                        setSelectedColor(currentState => {
-                                                            return item;
-                                                        });
-                                                    }} style={{border: '1px solid black', backgroundColor: item, color: 'white', outline: selectedColor === item ? '2px solid black' : ''}}></span>
-                                                );
-                                            })}
+                                            <span>Colors: </span>
+                                            <div className="row">
+                                                {singleProduct!.colors.map(item => {
+                                                    return (
+                                                        <span className="pointer" key={nanoid()} onClick={() => {
+                                                            setSelectedColor(currentState => {
+                                                                return item;
+                                                            });
+                                                        }} style={{border: '1px solid black', backgroundColor: item, color: 'white',minWidth:'40px',minHeight:'40px', outline: selectedColor === item ? '2px solid #4cb051' : '',marginRight:'10px',marginTop:'10px',}}></span>
+                                                    );
+                                                })}
+                                            </div>
                                         </p>
                                         <p>
                                             <span>Amount: </span>
@@ -142,15 +147,9 @@ const Product: React.FunctionComponent = () => {
             ) : (
                 <div className="rating-container">
                     <div className="rating-search">
-                        <h1>Reviews ({totalReviews})</h1>
+                        <h1 className="f16">Reviews ({totalReviews})</h1>
                         <div className="rating-filters">
-                            {didOrder && !alreadyWroteReview && (
-                                <div>
-                                    <div onClick={() => {
-                                        dispatch(toggleIsAddingReview());
-                                    }} className="add-review">{isAddingReview ? 'X' : '+'}</div>
-                                </div> 
-                            )}
+                            
                             <div>
                                 <label htmlFor="ratingValue">Rating</label>
                                 <select id="ratingValue" name="ratingValue" value={searchBoxValues.ratingValue} onChange={(event) => {
@@ -183,9 +182,19 @@ const Product: React.FunctionComponent = () => {
                     {isAddingReview && (
                         <AddReview/>
                     )}
+                    
                     <div className="rating-results">
+                        {didOrder && !alreadyWroteReview && !isAddingReview && (
+                            <div className="row aCenter jCenter pad20">
+                                <div onClick={() => {
+                                    dispatch(toggleIsAddingReview());
+                                }} className="add-review">+ Add Review</div>
+                            </div> 
+                        )}
+
                         <ReviewList data={singleProductReviews}/>
                     </div>
+                    
                     {numberOfPages! > 1 && (
                         <PaginationBox numberOfPages={numberOfPages!} page={page} changePage={setPage} updateSearch={getSingleProductReviews} _id={id}/>
                     )}
@@ -197,14 +206,12 @@ const Product: React.FunctionComponent = () => {
 
 const Wrapper = styled.div`
     .product-navigation {
-        padding: 0.5rem;
-        margin: 0 1rem;
-        margin-top: 1rem;
-        background-color: black;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        padding:20px;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        background-color:#eeeeee;
     }
     .product-actions {
         display: flex;
@@ -225,64 +232,80 @@ const Wrapper = styled.div`
         color: lightblue;
     }
     .product-container {
-        padding: 1rem;
+        padding: 100px 20px;
     }
     .product-information {
+        display:flex;
+        flex-direction:row;
         img {
-            outline: 1px solid black;
             width: 20rem;   
             height: 20rem;
+            object-fit:contain;
         }
         display: flex;
     }
     .product-image {
-        margin-right: 1rem;
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+
     }
     .product-details {
+        flex:1;
+        display:flex;
+        flex-direction:column;
         p {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid black;
+            font-weight:400;
+            margin-bottom:10px;
         }
         span {
-            background-color: lightgreen;
-            border-radius: 0.5rem;
-            padding: 0rem 0.5rem;
-            margin-right: 0.5rem;
+            font-weight:600;
         }
+    }
+    .product-details .product-title {
+        font-size:48px;
+        font-weight:600;
+    }
+    .product-details .product-price {
+        font-weight:600;
+        margin-bottom:20px;
+    }
+    .product-details .product-description {
+        padding:20px;
+        margin-bottom:20px;
+        background-color:#eeeeee;
     }
     .btn {
         cursor: pointer;
-        color: black;
-        outline: 1px solid black;
-        border: none;
-        border-radius: 0.5rem;
-        display: inline-block;
-        padding: 0.5rem;
-        background-color: white;
+        color: white;
+        background-color: black;
         user-select: none;
+        border-width:0px;
+        padding:20px 60px;
+        margin-top:20px;
     }
     .btn:hover, .btn:active {
         background-color: black;
         color: white;
     }
     .single-review {
-        outline: 1px solid black;
-        margin: 0.5rem 0;
-        padding: 1rem;
-        display: flex;
+        margin:20px;
+        display:flex;
+        flex-direction:row;
+        padding-bottom:20px;
+        border-bottom:1px solid #eeeeee;
     }
     .review-user {
-        text-align: center;
-        outline: 1px solid black;
-        display: flex;
-        flex-direction: column;
+        display:flex;
     }
     .rating-search {
-        padding: 0 1rem;
+        padding: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid #eeeeee;
     }
     .rating-filters {
         display: flex;
@@ -294,63 +317,99 @@ const Wrapper = styled.div`
         }
     }
     .pfp {
-        width: 5rem;
-        height: 5rem;
-        outline: 1px solid black;
+        width:50px;
+        height:50px;
+        object-fit:cover;
     }
     .review-info {
-        margin-left: 1rem;
+        flex:1;
+        margin-left:20px;
     }
     .pointer {
         cursor: pointer;
     }
     .add-review {
-        background-color: gray;
-        padding: 0 0.5rem;
-        margin-right: 0.5rem;
-        outline: 1px solid black;
-        cursor: pointer;
+        width:200px;
+        padding:10px;
+        color:#FFFFFF;
+        text-align:center;
+        background-color:#000000;
     }
     .review-form {
-        width: 50%;
-        outline: 1px solid black;
-        margin: 1rem auto;
-        text-align: center;
-        padding: 1rem;
+        margin:20px;
+        padding:0px;
+        margin-top:0px;
+        border:0px solid #eeeeee;
         select, input, textarea, button {
             width: 100%;
-            padding: 0.25rem;
+            padding:10px;
+            border-radius:0px;
         }
         textarea {
             resize: none;
             height: 100px;
+            border:1px solid #eeeeee;
+            background-color:#F9F9F9;
         }
     }
     .review-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        label{
+            display:flex;
+            margin-top:10px;
+            margin-bottom:20px;
+        }
     }
-    .edit-review, .delete-review {
-        display: inline-block;
-        margin-top: 0.5rem;
-        background-color: gray;
-        padding: 0 1rem;
-        margin-right: 0.5rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
+    label[for="comment"] {
+        margin-top:10px;
+        margin-bottom:20px;
     }
-    .edit-review:hover, .edit-review:active, .delete-review:hover, .delete-review:active {
-        outline: 1px solid black;
-        background-color: white;   
+    .review-container div {
+        margin-top:10px;
+        margin-bottom:20px;
+    }
+    .edit-review {
+        cursor:pointer;
+        display:inline-block;
+        color:#FFFFFF;
+        padding:5px 20px;
+        margin-top:10px;
+        margin-right:10px;
+        border:0px solid #000000;
+        background-color:#4CAF50;
+    }
+    .delete-review {
+        cursor:pointer;
+        display:inline-block;
+        color:#000000;
+        padding:5px 20px;
+        margin-top:10px;
+        margin-right:10px;
+        border:0px solid #000000;
+        background-color:#EEEEEE;
+    }
+    .edit-review:hover, .edit-review:active {
+        color:#4CAF50;
+        outline: 1px solid #4CAF50; 
+        background-color:#FFFFFF;
+    }
+    .delete-review:hover, .delete-review:active {
+        color:#FF0000;
+        outline: 1px solid #FF0000; 
+        background-color:#FFFFFF; 
     }
     .edit-review-form {
         label {
             display: block;
+            margin-top:20px;
+            margin-bottom:10px;
         }
         select, input, textarea, button {
             width: 100%;
-            padding: 0.25rem;
+            padding:10px;
+            border-radius:0px;
         }
         textarea {
             resize: none;
@@ -358,16 +417,24 @@ const Wrapper = styled.div`
         }
     }
     .already-ordered {
-        margin: 1rem;
-        outline: 1px solid black;
-        display: flex;
-        align-items: center;
-        padding: 0.5rem;
+        padding:1rem;
+        display:flex;
+        flex-direction:row;
+        justify-content: center;
+        align-items:center;
+        div {
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+        }
         svg {
             color: green;
         }
         a {
-            color: black;
+            margin-left:15px;
+            color:#ffffff;
+            padding:0px 15px;
+            background-color:#000000;
         }
         a:hover {
             color: gray;
@@ -375,6 +442,24 @@ const Wrapper = styled.div`
         .already-ordered-text {
             margin-left: 1rem;
         }
+    }
+    .rating-container {
+        width:50%;
+        margin: auto;
+    }
+    .editReviewButton {
+        width:200px;
+        max-width:200px;
+        padding:7px !important;
+        color:#ffffff;
+        margin:10px 0px 0px 0px;
+        border:1px solid #000000;
+        background-color:#000000;
+        cursor:pointer;
+    }
+    .editReviewButton:hover {
+        color:#000000;
+        background-color:#ffffff;
     }
 `;
 

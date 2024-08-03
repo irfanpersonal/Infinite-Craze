@@ -20,21 +20,34 @@ const Stats: React.FunctionComponent = () => {
     }, []);
     return (
         <Wrapper>
-            <h1 className="title">Stats</h1>
+            
             {getStatsLoading ? (
                 <Loading title="Loading Stats" position='normal' marginTop='1rem'/>
             ) : (
                 <>
-                    <div className="stats-container">
-                        <div className="stats-item">Total Earnings: ${statsData!.totalEarnings}</div>
-                        <div className="stats-item">Total Orders: {statsData!.totalOrders}</div>
-                        <div className="stats-item">Total Products: {statsData!.totalProducts}</div>
-                        <div className="stats-item">Total Reviews: {statsData!.totalReviews}</div>
-                        <div className="stats-item">Total Users: {statsData!.totalUsers}</div>
+                    <div className="pad20 pageHeader"><h1 className="tCenter">Statistics</h1><p className="tCenter">Fine-tuned reporting metrics</p></div>
+                    <div className="pad10">
+                        <div className="stats-container">
+                            <div className="stats-item">
+                                <div className="stats-itemInner">Total Earnings: <span>${statsData!.totalEarnings}</span></div>
+                            </div>
+                            <div className="stats-item">
+                                <div className="stats-itemInner">Total Orders: <span>{statsData!.totalOrders}</span></div>
+                            </div>
+                            <div className="stats-item">
+                                <div className="stats-itemInner">Total Products: <span>{statsData!.totalProducts}</span></div>
+                            </div>
+                            <div className="stats-item">
+                                <div className="stats-itemInner">Total Reviews: <span>{statsData!.totalReviews}</span></div>
+                            </div>
+                            <div className="stats-item">
+                                <div className="stats-itemInner">Total Users: <span>{statsData!.totalUsers}</span></div>
+                            </div>
+                        </div>
                     </div>
                     {statsData!.ordersPerMonth.length > 0 ? (
                         <>
-                            <p className="chart-label" onClick={() => setViewBarChart(currentState => !currentState)}>{viewBarChart ? 'View Pie Chart' : 'View Bar Chart'}</p>
+                            
                             <div className="chart-container">
                                 {viewBarChart ? (
                                     <BarChart width={600} height={300} data={statsData!.ordersPerMonth.map(item => {
@@ -57,6 +70,7 @@ const Stats: React.FunctionComponent = () => {
                                     </PieChart>
                                 )}
                             </div>
+                            <p className="chart-label" onClick={() => setViewBarChart(currentState => !currentState)}>{viewBarChart ? 'View Pie Chart' : 'View Bar Chart'}</p>
                         </>
                     ) : (
                         <h1 style={{textAlign: 'center'}}>Not Enough Data to Provide Chart!</h1>
@@ -68,17 +82,34 @@ const Stats: React.FunctionComponent = () => {
 }
 
 const Wrapper = styled.div`
-    padding: 1rem;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    .pageHeader {
+        border-top:1px solid #eeeeee;
+    }
     .title {
         text-align: center;
         background-color: black;
         color: white;
     }
     .stats-container {
+        flex:1;
+        display:flex;
+        flex-direction:row;
         .stats-item {
-            outline: 1px solid black;
-            margin: 1rem 0;
-            padding: 1rem;
+            flex:1;
+            display: flex;
+            flex-direction: row;
+            font-weight: 600;
+            padding: 0px 10px;
+        }
+        .stats-itemInner {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eeeeee;
         }
     }
     .chart-label {
@@ -90,11 +121,16 @@ const Wrapper = styled.div`
         color: gray;
     }
     .chart-container {
-        background-color: lightgray;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
+    span {
+        font-size:18px;
+        font-weight:400;
+        margin-top: 5px;
     }
 `;
 

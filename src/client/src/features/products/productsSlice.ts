@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getAllProducts, createProduct} from './productsThunk';
+import {getAllProducts, createProduct, getFeaturedProducts} from './productsThunk';
 import {toast} from 'react-toastify';
 
 export type ProductType = {
@@ -31,7 +31,9 @@ interface IProducts {
     page: number,
     totalProducts: number | null,
     numberOfPages: number | null,
-    createProductLoading: boolean
+    createProductLoading: boolean,
+    getFeaturedProductsLoading: boolean,
+    featuredProducts: ProductType[]
 }
 
 const initialState: IProducts = {
@@ -48,7 +50,9 @@ const initialState: IProducts = {
     page: 1,
     totalProducts: null,
     numberOfPages: null,
-    createProductLoading: false
+    createProductLoading: false,
+    getFeaturedProductsLoading: true,
+    featuredProducts: []
 };
 
 const productsSlice = createSlice({
@@ -83,6 +87,13 @@ const productsSlice = createSlice({
         }).addCase(createProduct.rejected, (state, action) => {
             state.createProductLoading = false;
             toast.error(action.payload as string);
+        }).addCase(getFeaturedProducts.pending, (state, action) => {
+            state.getFeaturedProductsLoading = true;
+        }).addCase(getFeaturedProducts.fulfilled, (state, action) => {
+            state.getFeaturedProductsLoading = false;
+            state.featuredProducts = action.payload;
+        }).addCase(getFeaturedProducts.rejected, (state, action) => {
+            state.getFeaturedProductsLoading = false;
         });
     }
 });

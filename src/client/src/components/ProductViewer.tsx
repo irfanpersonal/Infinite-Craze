@@ -51,8 +51,8 @@ const ProductViewer: React.FunctionComponent<ProductViewerProps> = ({data: Order
         });
     }
     return (
-        <Wrapper>
-            <div>{names[currentImage] || 'Product Deleted'}</div>
+        <Wrapper className="productImageWrapper">
+            <div style={{fontWeight:'400'}}>{names[currentImage] || 'Product Deleted'}</div>
             <img className="product-image" src={images[currentImage] || emptyProductImage}/>
             <div>Amount: {amounts[currentImage]}</div>
             <div>Color: {colors[currentImage]}</div>
@@ -67,16 +67,17 @@ const ProductViewer: React.FunctionComponent<ProductViewerProps> = ({data: Order
 }
 
 const Wrapper = styled.div`
-    margin: 0 auto;
+    margin: 0px 50px;
     text-align: center;
     display: flex;
     flex-direction: column;
     .product-image {
+        width: 200px;
+        height: 200px;
         display: block;
-        margin: 0 auto;
-        width: 5rem;
-        height: 5rem;
-        outline: 1px solid black;
+        margin: auto;
+        margin: 50px auto;
+        object-fit: contain;
     }
     .navigation-box {
         display: flex;

@@ -58,10 +58,10 @@ const EditProduct: React.FunctionComponent<EditProductProps> = ({data}) => {
         <Wrapper>
             <form onSubmit={handleSubmit} className="edit-product-form">
                 <p style={{textAlign: 'center', marginBottom: '0.25rem'}}>Current Image</p>
-                <img style={{width: '10rem', height: '10rem', outline: '1px solid black', display: 'block', margin: '0 auto', marginBottom: '0.25rem'}} src={data.image}/>
+                <img style={{width: '100px', height: '100px', display: 'block', margin: '0 auto', marginBottom: '20px',objectFit:'contain'}} src={data.image}/>
                 <div>
                     <label htmlFor="image">Image</label>
-                    <input style={{padding: '0'}} id="image" type="file" name="file"/>
+                    <input style={{}} id="image" type="file" name="file"/>
                 </div>
                 <div>
                     <label htmlFor="name">Name</label>
@@ -116,7 +116,7 @@ const EditProduct: React.FunctionComponent<EditProductProps> = ({data}) => {
                                     return;
                                 }
                                 removeInput(index);
-                            }}>X</button>
+                            }}>Delete</button>
                         </div>
                     ))}
                 </div>
@@ -129,21 +129,22 @@ const EditProduct: React.FunctionComponent<EditProductProps> = ({data}) => {
 const Wrapper = styled.div`
     padding: 1rem;
     .edit-product-form {
-        outline: 1px solid black;
-        margin: 0 auto;
-        padding: 1rem;
+        width:50%;
+        margin:auto;
         label {
             display: block;
+            margin:10px 0px;
         }
         input, select {
-            margin-bottom: 0.5rem;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 0.25rem;
+            padding:10px;
+            border-radius:0px;
+            width:100%;
         }
         button {
-            margin-top: 1rem;
+            color:#FFFFFF;
+            padding:10px 60px;
+            border-width:0px;
+            background-color:#000000;
         }
     }
     #color-box {
@@ -154,8 +155,10 @@ const Wrapper = styled.div`
         margin: 0;
     }
     #remove-color {
-        padding: 0.5rem;
-        margin: 0;
+        color:#FFFFFF;
+        margin-top:0px;
+        padding:0px 20px;
+        background-color:#000000;
     }
     .colors-box {
         margin-top: 0.5rem;

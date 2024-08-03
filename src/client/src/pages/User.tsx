@@ -22,25 +22,49 @@ const User: React.FunctionComponent = () => {
                 <Loading title="Loading Single User" position='normal' marginTop='1rem'/>
             ) : (
                 <>
-                    <div className="user-container">
-                        <Link className="user-link" to='/user'>Back to Users</Link>
+                    <div className="pad20 pageHeader"><h1 className="tCenter">{singleUser!.name}</h1><p className="tCenter">Joined: {moment(singleUser!.createdAt).format('MMMM Do YYYY')}</p></div>
+                    <div className="user-container user-orders">
+                        
+
                         <img className="user-image" src={singleUser!.profilePicture || emptyProfilePicture} alt={singleUser!.name}/>
-                        <div className="user-info">Name: {singleUser!.name}</div>
-                        <div className="user-info">Joined: {moment(singleUser!.createdAt).format('MMMM Do YYYY')}</div>
-                        <div className="user-info">Email: {singleUser!.email}</div>
-                        <div className="user-info">Phone Number: {(String(singleUser!.phoneNumber)).replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}</div>
-                    </div>
-                    <div className="user-orders">
-                        <div className="user-info">Number of Orders: {singleUser!.orders.length}</div>
-                        <div className="user-info">Total Profit: <span>
-                            {
-                                (singleUser!.orders.reduce((totalProfit, item) => {
-                                    return totalProfit + item.total;
-                                }, 0) / 100).toFixed(2)
-                            }
-                            </span>
+                        
+                        
+                        <div className="row flexFull">
+                            <div className="user-info flexFull">
+                                <div className="user-infoInner">
+                                    Email: <span>{singleUser!.email}</span>
+                                </div>
+                            </div>
+                            <div className="user-info flexFull">
+                                <div className="user-infoInner">
+                                    Phone Number: <span>{(String(singleUser!.phoneNumber)).replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}</span>
+                                </div>
+                            </div>
+                            
+                            <div className="user-info flexFull">
+                                <div className="user-infoInner">
+                                    Number of Orders: <span>{singleUser!.orders.length}</span>
+                                </div>
+                            </div>
+                            
+                            <div className="user-info flexFull">
+                                <div className="user-infoInner">Total Profit: <span>
+                                    {
+                                        (singleUser!.orders.reduce((totalProfit, item) => {
+                                            return totalProfit + item.total;
+                                        }, 0) / 100).toFixed(2)
+                                    }
+                                    </span>
+                                </div>
+                            </div >
+                            
                         </div>
+                        
+
                     </div>
+                
+                    
+           
                 </>
             )}
         </Wrapper>
@@ -48,32 +72,43 @@ const User: React.FunctionComponent = () => {
 }
 
 const Wrapper = styled.div`
-    padding: 1rem;
-    text-align: center;
-    .user-info {
-        margin: 1rem 0;
+    padding:20px;
+    .user-infoInner {
+
+    }
+    .pageHeader {
+        border-top:1px solid #eeeeee;
+        border-bottom:1px solid #eeeeee;
+        h1 {
+            text-transform:capitalize;
+        }
     }
     .user-container {
         .user-image {
-            width: 5rem;
-            height: 5rem;
-            outline: 1px solid black;
-        }
-        .user-link {
+            width: 200px;
+            height: 200px;
             display: block;
-            background-color: lightgray;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            text-decoration: none;
-            color: black;
+            margin: auto;
+            margin: 50px auto;
+            object-fit: contain;
         }
-        .user-link:active, .user-link:hover {
-            outline: 1px solid black;
+        .user-info {
+            display:flex;
+            flex-direction:row;
+            font-weight:600;
+            padding:0px 10px;
         }
-        .user-orders {
-            width: 50%;
-            outline: 1px solid black;
-            padding: 1rem;
+        .user-infoInner {
+            padding:20px;
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            border:1px solid #eeeeee;
+        }
+        span {
+            font-size:18px;
+            font-weight:400;
+            margin-top: 5px;
         }
     }
 `;

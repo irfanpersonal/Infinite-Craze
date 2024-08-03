@@ -4,28 +4,25 @@ import {useDispatch, useSelector} from "react-redux";
 import {type useDispatchType, type useSelectorType} from '../store';
 import {Loading, ProfileData, EditProfile, ChangePassword, DeleteAccount} from '../components';
 import {getProfileData} from '../features/profile/profileThunk';
-import {logoutUser} from '../features/user/userThunk';
 
 const Profile: React.FunctionComponent = () => {
     const dispatch = useDispatch<useDispatchType>();
-    const {user, logoutLoading} = useSelector((store: useSelectorType) => store.user);
+    const {user} = useSelector((store: useSelectorType) => store.user);
     const {profileDataLoading, profileData} = useSelector((store: useSelectorType) => store.profile);
-    const [view, setView] = React.useState(1);
+    const [view, setView] = React.useState<number>(1);
     React.useEffect(() => {
         dispatch(getProfileData(user!.userID));
     }, []);
     return (
         <Wrapper>
-            <h1 className="title">Profile</h1>
             <div className="profile-container">
                 <div className="option-container">
-                    <div style={{backgroundColor: view === 1 ? 'lightgray' : ''}} onClick={() => setView(currentState => 1)}>User Information</div>
-                    <div style={{backgroundColor: view === 2 ? 'lightgray' : ''}} onClick={() => setView(currentState => 2)}>Edit Profile</div>
-                    <div style={{backgroundColor: view === 3 ? 'lightgray' : ''}} onClick={() => setView(currentState => 3)}>Change Password</div>
+                    <div className="optionItem" style={{borderBottomColor: view === 1 ? '#000000' : '',fontWeight: view === 1 ? '600' : '',}} onClick={() => setView(currentState => 1)}>User Information</div>
+                    <div className="optionItem" style={{borderBottomColor: view === 2 ? '#000000' : '',fontWeight: view === 2 ? '600' : '',}} onClick={() => setView(currentState => 2)}>Edit Profile</div>
+                    <div className="optionItem" style={{borderBottomColor: view === 3 ? '#000000' : '',fontWeight: view === 3 ? '600' : '',}} onClick={() => setView(currentState => 3)}>Change Password</div>
                     {user!.role === 'user' && (
-                        <div style={{backgroundColor: view === 4 ? 'lightgray' : ''}} onClick={() => setView(currentState => 4)}>Delete Account</div>
+                        <div className="optionItem" style={{borderBottomColor: view === 4 ? '#000000' : ''}} onClick={() => setView(currentState => 4)}>Delete Account</div>
                     )}
-                    <button style={{backgroundColor: 'white'}} className="logout" onClick={() => dispatch(logoutUser())} disabled={logoutLoading}>{logoutLoading ? 'Logging Out...' : 'Logout'}</button>
                 </div>
                 <div className="content-container">
                     {profileDataLoading ? (
@@ -53,58 +50,45 @@ const Profile: React.FunctionComponent = () => {
 }
 
 const Wrapper = styled.div`
-    padding: 1rem;
-    .title {
-        text-align: center;
-        background-color: black;
-        outline: 1px solid black;
-        color: white;
-        margin-bottom: 1rem;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    .pageHeader {
+        padding-bottom:40px;
+        border-top:1px solid #eeeeee;
     }
     .profile-container {
+        flex:1;
         display: flex;
+        flex-direction:column;
     }
     .option-container {
-        flex-basis: 50%;
-        div {
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:center;
+        border-bottom:1px solid #eeeeee;
+        .optionItem {
+            padding:10px 30px;
             cursor: pointer;
-            outline: 1px solid black;
-            padding: 0.25rem;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        div:hover {
-            background-color: lightgray;
+            border-bottom:1px solid #FFFFFF;
         }
     }
     .content-container {
-        flex-basis: 40%;
-        margin: 0 auto;
+        width:500px;
+        max-width:100%;
+        margin: 0px auto;
     }
     form {
         label {
             display: block;
-            margin-top: 0.5rem;
         }
         button {
             margin-top: 1rem;
         }
         input, button {
             width: 100%;
-            padding: 0.25rem;
         }
-    }
-    .logout {
-        cursor: pointer;
-        width: 100%;
-        padding: 0.25rem;
-        border: none;
-        border-radius: 0.25rem;
-        outline: 1px solid black;
-    }
-    .logout:hover {
-        background-color: #ec4747a6;
     }
 `;
 

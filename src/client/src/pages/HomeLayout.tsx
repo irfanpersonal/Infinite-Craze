@@ -5,7 +5,7 @@ const HomeLayout: React.FunctionComponent = () => {
     return (
         <>
             <Navbar/>
-            <section>
+            <section className="main">
                 <Outlet/>
             </section>
         </>

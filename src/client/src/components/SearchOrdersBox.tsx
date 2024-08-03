@@ -34,41 +34,60 @@ const SearchOrdersBox: React.FunctionComponent<SearchOrdersBoxProps> = ({searchB
     }
     return (
         <Wrapper>
-            <form onSubmit={handleSubmit}>
+            <form className="orderFilters" onSubmit={handleSubmit}>
                 {role === 'admin' && (
-                    <div>
-                        <input placeholder='Find Orders based off User Name' id="username" type="search" name="username" value={searchBoxValues.username} onChange={handleChange}/>
+                    <div className="orderFilterItem">
+                        <div className="orderFilterSubItem">
+                            <label htmlFor="username">Find</label>
+                            <input placeholder='Filter by name' id="username" type="search" name="username" value={searchBoxValues.username} onChange={handleChange}/>
+                        </div>
                     </div>
                 )}
-                <div>
-                    <label htmlFor="date-range">Date Range</label>
-                    <input id="date-range" type="date" name="startDate" value={moment(searchBoxValues.startDate).utc().format('YYYY-MM-DD')} onChange={handleChange}/> 
-                    to
-                    <input id="date-range" type="date" name="endDate" value={moment(searchBoxValues.endDate).utc().format('YYYY-MM-DD')} onChange={handleChange}/> 
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <label htmlFor="date-range">Date Range</label>
+                        <input id="date-range" type="date" name="startDate" value={moment(searchBoxValues.startDate).utc().format('YYYY-MM-DD')} onChange={handleChange}/> 
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="total-range">Total Range</label>
-                    <input placeholder='$ Min' min="1" id="total-range" type="number" name="minimumTotal" value={searchBoxValues.minimumTotal} onChange={handleChange}/> 
-                    to 
-                    <input placeholder='$ Max' min="1" id="total-range" type="number" name="maximumTotal" value={searchBoxValues.maximumTotal} onChange={handleChange}/> 
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <span>To</span>
+                        <input id="date-range" type="date" name="endDate" value={moment(searchBoxValues.endDate).utc().format('YYYY-MM-DD')} onChange={handleChange}/> 
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="orderStatus">Order Status</label>
-                    <select id="orderStatus" name="orderStatus" value={searchBoxValues.orderStatus} onChange={handleChange}>
-                        <option value=""></option>
-                        <option value="paid">Paid</option>
-                        <option value="preparing">Preparing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                    </select>
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <label htmlFor="total-range">Total Range</label>
+                        <input placeholder='$ Min' min="1" id="total-range" type="number" name="minimumTotal" value={searchBoxValues.minimumTotal} onChange={handleChange}/> 
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="sortBy">Sort By</label>
-                    <select id="sortBy" name="sortBy" value={searchBoxValues.sortBy} onChange={handleChange}>
-                        <option value=""></option>
-                        <option value="newest">Newest</option>
-                        <option value="oldest">Oldest</option>
-                    </select>
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <span>To</span>
+                        <input placeholder='$ Max' min="1" id="total-range" type="number" name="maximumTotal" value={searchBoxValues.maximumTotal} onChange={handleChange}/> 
+                    </div>
+                </div>
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <label htmlFor="orderStatus">Order Status</label>
+                        <select id="orderStatus" name="orderStatus" value={searchBoxValues.orderStatus} onChange={handleChange}>
+                            <option value=""></option>
+                            <option value="paid">Paid</option>
+                            <option value="preparing">Preparing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="orderFilterItem">
+                    <div className="orderFilterSubItem">
+                        <label htmlFor="sortBy">Sort By</label>
+                        <select id="sortBy" name="sortBy" value={searchBoxValues.sortBy} onChange={handleChange}>
+                            <option value=""></option>
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" disabled={ordersLoading}>{ordersLoading ? 'Searching' : 'Search'}</button>
             </form>
@@ -78,23 +97,38 @@ const SearchOrdersBox: React.FunctionComponent<SearchOrdersBoxProps> = ({searchB
 
 const Wrapper = styled.div`
     form {
-        margin: 1rem 0;
-        outline: 1px solid black;
-        label {
+        flex:1;
+        padding:10px;
+        display:flex;
+        flex-direction:row;
+        align-items:flex-end;
+        label , span {
             display: block;
-            margin-top: 0.5rem;
+            margin-bottom: 10px;
         }
         input, select {
-            margin-bottom: 0.5rem;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 0.25rem;
+            padding:10px;
+            border-radius:0px;
         }
         button {
+            margin:10px;
+            height:42px;
+            width:initial;
             border: none;
-            border-top: 1px solid black;
-            margin-top: 0.5rem;
+            padding:0px 15px;
+            background-color:#f9f9f9;
+            border:1px solid #eeeeee;
+        }
+        .orderFilterItem {
+            flex:1;
+            display:flex;
+            flex-direction:row;
+        }
+        .orderFilterSubItem {
+            flex:1;
+            padding: 10px;
+            display:flex;
+            flex-direction:column;
         }
     }
 `;

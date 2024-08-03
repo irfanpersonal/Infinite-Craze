@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import emptyProductImage from '../images/empty-product-image.jpeg';
 import {Link} from 'react-router-dom';
 import {type ProductType} from '../features/products/productsSlice';
 
@@ -9,29 +10,36 @@ interface ProductListItemProps {
 const ProductListItem: React.FunctionComponent<ProductListItemProps> = ({data}) => {
     return (
         <Wrapper to={`/product/${data._id}`}>
-            <img className="product-image" src={data.image} alt={data.name}/>
-            <div>{data.name}</div>
-            <div>${data.price / 100}</div>
+            <div className="productItemInner">
+                <img className="productImage" src={data.image || emptyProductImage} alt={data.name}/>
+                <div>
+                    <div className="column flexFull">
+                        <div className="product-name">{data.name}</div>
+                        <div>${data.price / 100}</div>
+                    </div>
+                </div>
+            </div>
         </Wrapper>
     );
 }
 
 const Wrapper = styled(Link)`
-    display: block;
-    margin-bottom: 0.5rem;
-    outline: 1px solid black;
-    padding: 1rem;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    border-radius: 0.25rem;
+    border-right: 1px solid rgb(238, 238, 238);
+    border-bottom: 1px solid rgb(238, 238, 238);
     &:hover {
         box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     }
-    .product-image {
-        width: 5rem;
-        height: 5rem;
-        outline: 1px solid black;
+    img {
+        width: 12rem;
+        height: 12rem;
+        display: block;
+        margin: auto;
+        margin: 3rem auto;
+        object-fit: contain;
+    }
+    .product-name {
+        font-weight: bold;
+        font-size: 1rem;
     }
 `;
 
