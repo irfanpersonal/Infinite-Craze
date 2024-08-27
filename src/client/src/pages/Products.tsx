@@ -41,7 +41,7 @@ const Products: React.FunctionComponent = () => {
                         </>
                     )}
                     {user!?.role === 'admin' && (
-                        <Link to='/add-product' className="add-product">List</Link>
+                        <Link to='/add-product' className="add-product">+</Link>
                     )}
                 </div>
             </div>

@@ -27,7 +27,7 @@ export const createProduct = createAsyncThunk('products/createProduct', async(pr
 
 export const getFeaturedProducts = createAsyncThunk('products/featuredProducts', async(_, thunkAPI) => {
     try {
-        const response = await axios.get(`/api/v1/product`);
+        const response = await axios.get(`/api/v1/product?limit=4`);
         const data = response.data;
         return data.products;
     }

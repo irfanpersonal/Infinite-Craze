@@ -35,7 +35,7 @@ const Home: React.FunctionComponent = () => {
                     <div className="row">
                         {featuredProducts.map(featuredProduct => {
                             return (
-                                <Link className="productItem" to={`/product/${featuredProduct._id}`}>
+                                <Link key={featuredProduct._id} className="productItem" to={`/product/${featuredProduct._id}`}>
                                     <div className="productItemInner">
                                         <img className="productImage" src={featuredProduct.image}></img>
                                         <div className="row">
