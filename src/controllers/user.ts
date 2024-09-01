@@ -71,7 +71,10 @@ const getSingleUser = async(req: UserRequest, res: Response) => {
 }
 
 const updateUser = async(req: UserRequest, res: Response) => {
-    req.body.role = "user";
+    (req.body.role as any) = undefined;
+    if (req.user!.role === 'admin') {
+        throw new CustomError.ForbiddenError(`Admins are not permitted to update profile details.`)
+    }
     const updatedUser = (await User.findOneAndUpdate({_id: req.user!.userID}, req.body, {
         new: true,
         runValidators: true,

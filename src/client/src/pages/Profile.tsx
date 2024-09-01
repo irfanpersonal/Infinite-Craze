@@ -18,7 +18,9 @@ const Profile: React.FunctionComponent = () => {
             <div className="profile-container">
                 <div className="option-container">
                     <div className="optionItem" style={{borderBottomColor: view === 1 ? '#000000' : '',fontWeight: view === 1 ? '600' : '',}} onClick={() => setView(currentState => 1)}>User Information</div>
-                    <div className="optionItem" style={{borderBottomColor: view === 2 ? '#000000' : '',fontWeight: view === 2 ? '600' : '',}} onClick={() => setView(currentState => 2)}>Edit Profile</div>
+                    {user!.role !== 'admin' && (
+                        <div className="optionItem" style={{borderBottomColor: view === 2 ? '#000000' : '',fontWeight: view === 2 ? '600' : '',}} onClick={() => setView(currentState => 2)}>Edit Profile</div>
+                    )}
                     <div className="optionItem" style={{borderBottomColor: view === 3 ? '#000000' : '',fontWeight: view === 3 ? '600' : '',}} onClick={() => setView(currentState => 3)}>Change Password</div>
                     {user!.role === 'user' && (
                         <div className="optionItem" style={{borderBottomColor: view === 4 ? '#000000' : ''}} onClick={() => setView(currentState => 4)}>Delete Account</div>

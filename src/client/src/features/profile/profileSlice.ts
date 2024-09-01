@@ -39,7 +39,7 @@ const profileSlice = createSlice({
             toast.success('Edited Profile!');
         }).addCase(editProfile.rejected, (state, action) => {
             state.editProfileLoading = false;
-            toast.success(action.payload as string);
+            toast.error(action.payload as string);
         }).addCase(updatePassword.pending, (state) => {
             state.updatePasswordLoading = true;
         }).addCase(updatePassword.fulfilled, (state) => {
