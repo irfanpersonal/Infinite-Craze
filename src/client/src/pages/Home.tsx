@@ -19,7 +19,7 @@ const Home: React.FunctionComponent = () => {
                 <div className="container">
                     <div className="overlay pTop200 pBottom200 column aCenter jCenter">
                     <h1 className="cWhite f48 tCenter">Fulfill Your Every Desire</h1>
-                    <p className="cWhite mBottom50 tCenter">Explore our vast selection of premium products designed to satisfy your every wish. From unique finds to everyday essentials, discover endless possibilities at your fingertips.</p>
+                    <p className="cWhite mBottom50 tCenter">Explore our vast selection of premium products designed to satisfy your every wish.</p>
                     <Link className="lightButton" to='/product'>Shop Now</Link>
                     </div>
                 </div>
